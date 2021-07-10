@@ -80,7 +80,6 @@ const Link = styled.a`
   flex: 1 1 340px;
   flex-wrap: wrap;
   position: relative;
-  max-width: 500px;
 `;
 
 const Wrapper = styled.article`
