@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { COLORS, WEIGHTS } from '../../constants';
-import { formatPrice, pluralize, isNewShoe } from '../../utils';
-import Spacer from '../Spacer';
+import { COLORS, WEIGHTS } from "../../constants";
+import { formatPrice, pluralize, isNewShoe } from "../../utils";
+import Spacer from "../Spacer";
 
 const ShoeCard = ({
   slug,
@@ -32,10 +32,16 @@ const ShoeCard = ({
       : 'default'
 
   const showPrice = (variant) => {
-    if (variant === 'on-sale') {
-      return (<PriceWrapper><Price>{formatPrice(price)}</Price><SalePrice>{formatPrice(salePrice)}</SalePrice></PriceWrapper>)
-    } return (<Price>{formatPrice(price)}</Price>)
-  }
+    if (variant === "on-sale") {
+      return (
+        <PriceWrapper>
+          <Price>{formatPrice(price)}</Price>
+          <SalePrice>{formatPrice(salePrice)}</SalePrice>
+        </PriceWrapper>
+      );
+    }
+    return <Price>{formatPrice(price)}</Price>;
+  };
 
   return (
     <Link href={`/shoe/${slug}`}>
@@ -49,12 +55,22 @@ const ShoeCard = ({
           {showPrice(variant)}
         </Row>
         <Row>
-          <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          <ColorInfo>{pluralize("Color", numOfColors)}</ColorInfo>
         </Row>
       </Wrapper>
+      <SmallBanner variant={variant}> {variant} </SmallBanner>
     </Link>
   );
 };
+
+const SmallBanner = styled.div`
+  position: absolute;
+  top: 5%;
+  right: 0;
+  background-color: red;
+  color: white;
+  padding: 11px 16px;
+`;
 
 const Link = styled.a`
   text-decoration: none;
@@ -68,8 +84,9 @@ const Link = styled.a`
 `;
 
 const Wrapper = styled.article`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 `;
 
 const ImageWrapper = styled.div`
@@ -80,7 +97,7 @@ const ImageWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  `;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
@@ -94,15 +111,17 @@ const Name = styled.h3`
 `;
 
 const PriceWrapper = styled.div`
-display: flex;
-position: absolute;
-right: 0;
-flex-direction: column;`
+  display: flex;
+  position: absolute;
+  right: 0;
+  flex-direction: column;
+`;
 
 const Price = styled.span`
-${PriceWrapper} & {
-  text-decoration: line-through;
-}`;
+  ${PriceWrapper} & {
+    text-decoration: line-through;
+  }
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
