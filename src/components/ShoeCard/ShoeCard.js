@@ -31,6 +31,12 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  const showPrice = (variant) => {
+    if (variant === 'on-sale') {
+      return (<PriceWrapper><Price>{formatPrice(price)}</Price><SalePrice>{formatPrice(salePrice)}</SalePrice></PriceWrapper>)
+    } return (<Price>{formatPrice(price)}</Price>)
+  }
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
@@ -40,7 +46,7 @@ const ShoeCard = ({
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          {showPrice(variant)}
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
@@ -53,18 +59,33 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 340px;
+  flex-wrap: wrap;
+  position: relative;
+  max-width: 500px;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+display: flex;
+flex-direction: column;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
+  top: 0;
+  width: 100%;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 100%;
+  `;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -72,7 +93,16 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const PriceWrapper = styled.div`
+display: flex;
+position: absolute;
+right: 0;
+flex-direction: column;`
+
+const Price = styled.span`
+${PriceWrapper} & {
+  text-decoration: line-through;
+}`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
